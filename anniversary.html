@@ -234,6 +234,51 @@
     box-shadow:0 0 0 1px rgba(255,111,168,0.5), 0 18px 40px rgba(255,111,168,0.36), 0 0 32px rgba(255,111,168,0.24);
   }
 
+  /* ---------- Flip cards section ---------- */
+  .flip-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:32px;
+  }
+  @media (max-width:620px){ .flip-grid{ grid-template-columns:1fr; gap:16px; } }
+  
+  .flip-card{
+    perspective:1000px; cursor:pointer; height:200px; position:relative;
+  }
+  @media (max-width:620px){ .flip-card{ height:180px; } }
+
+  .flip-card-inner{
+    position:relative; width:100%; height:100%;
+    transition:transform 0.6s;
+    transform-style:preserve-3d;
+  }
+
+  .flip-card.flipped .flip-card-inner{
+    transform:rotateY(180deg);
+  }
+
+  .flip-card-face{
+    position:absolute; width:100%; height:100%;
+    backface-visibility:hidden; display:flex;
+    align-items:center; justify-content:center; text-align:center; padding:20px;
+    border-radius:18px; border:1px solid var(--glass-border);
+    backdrop-filter:blur(14px); font-size:1rem; line-height:1.5;
+  }
+
+  .flip-card-front{
+    background:linear-gradient(135deg,rgba(255,111,168,0.16),rgba(255,111,168,0.08));
+    color:var(--text); font-weight:500;
+  }
+
+  .flip-card-back{
+    background:linear-gradient(135deg,rgba(91,141,255,0.16),rgba(91,141,255,0.08));
+    color:var(--text); transform:rotateY(180deg);
+    font-size:0.95rem;
+  }
+
+  .flip-card:hover .flip-card-face{
+    box-shadow:0 8px 28px rgba(255,111,168,0.24);
+    border-color:rgba(255,158,201,0.36);
+  }
+
   /* ---------- Tap effects: heart burst, tap trail, heart shower ---------- */
   .heart-burst-item{
     position:fixed; z-index:60; pointer-events:none; font-size:1.15rem;
@@ -260,33 +305,6 @@
   @keyframes showerFall{
     0%{ transform:translateY(0) rotate(0deg); opacity:0.95; }
     100%{ transform:translateY(112vh) rotate(50deg); opacity:0; }
-  }
-
-  /* ---------- Gallery carousel ---------- */
-  .carousel{
-    display:flex; gap:14px; overflow-x:auto; padding:24px 4px 10px;
-    scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
-  }
-  .carousel::-webkit-scrollbar{ height:6px; }
-  .carousel::-webkit-scrollbar-thumb{ background:var(--glass-border); border-radius:6px; }
-  .photo-box{
-    flex:0 0 78%; max-width:280px; aspect-ratio:4/5; scroll-snap-align:center;
-    border-radius:18px; border:1px solid rgba(255,158,201,0.3);
-    background:linear-gradient(160deg,rgba(255,111,168,0.22),rgba(255,111,168,0.12));
-    backdrop-filter:blur(12px);
-    box-shadow:0 6px 24px rgba(0,0,0,0.2);
-    display:flex; align-items:center; justify-content:center; text-align:center;
-    color:var(--text-dim); font-size:0.85rem; padding:16px;
-    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    overflow:hidden;
-  }
-  .photo-box img{
-    width:100%; height:100%; object-fit:cover;
-  }
-  .photo-box:hover{
-    transform:translateY(-4px);
-    border-color:rgba(255,158,201,0.55);
-    box-shadow:0 14px 34px rgba(255,111,168,0.36);
   }
 
   /* ---------- Timeline ---------- */
@@ -490,18 +508,58 @@
   </div>
 </section>
 
-<!-- ================= PHOTO GALLERY ================= -->
-<section id="gallery">
+<!-- ================= FLIP CARDS GALLERY ================= -->
+<section id="flipcards">
   <div class="wrap">
     <div class="eyebrow">Chapter Three</div>
-    <h2 class="section-title">Us, in <span class="accent">pictures</span></h2>
-    <p class="lead">A few of my favorite pieces of us.</p>
-    <div class="carousel">
-      <div class="photo-box"><img src="https://raw.githubusercontent.com/deonzy/pictures/main/photo1.jpg" alt="Us together" /></div>
-      <div class="photo-box"><img src="https://raw.githubusercontent.com/deonzy/pictures/main/photo2.jpg" alt="Us together" /></div>
-      <div class="photo-box"><img src="https://raw.githubusercontent.com/deonzy/pictures/main/photo3.jpg" alt="Us together" /></div>
-      <div class="photo-box"><img src="https://raw.githubusercontent.com/deonzy/pictures/main/photo1.jpg" alt="Us together" /></div>
-      <div class="photo-box"><img src="https://raw.githubusercontent.com/deonzy/pictures/main/photo2.jpg" alt="Us together" /></div>
+    <h2 class="section-title">A Few Things I Notice About You <span class="accent">💖</span></h2>
+    <p class="lead">Tap any card.</p>
+    <div class="flip-grid">
+
+      <div class="flip-card" tabindex="0" role="button" onclick="flipCard(this)" onkeypress="if(event.key==='Enter')flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front glass">
+            <span>😊 Your smile</span>
+          </div>
+          <div class="flip-card-face flip-card-back glass">
+            <span>The kind that makes me forget what I was saying.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" tabindex="0" role="button" onclick="flipCard(this)" onkeypress="if(event.key==='Enter')flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front glass">
+            <span>🎙️ Your voice</span>
+          </div>
+          <div class="flip-card-face flip-card-back glass">
+            <span>I love it so much that sometimes I get lost listening to you speak and don't even know what you're saying anymore. 💖</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" tabindex="0" role="button" onclick="flipCard(this)" onkeypress="if(event.key==='Enter')flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front glass">
+            <span>👀 Your eyes</span>
+          </div>
+          <div class="flip-card-face flip-card-back glass">
+            <span>Your eyes are one of my favorite things about you, and that awkward face you make sometimes just makes me love looking at you even more 😭💙</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" tabindex="0" role="button" onclick="flipCard(this)" onkeypress="if(event.key==='Enter')flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front glass">
+            <span>💬 The little things you say</span>
+          </div>
+          <div class="flip-card-face flip-card-back glass">
+            <span>Like "hello, get down 😭".</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -629,6 +687,16 @@ function toggleCard(card){
       navigator.vibrate([16,40,16]);
     }
   }
+}
+
+/* ---------- Flip card function ---------- */
+function flipCard(card){
+  const cardParent = card.closest('.flip-card');
+  cardParent.classList.toggle('flipped');
+  if('vibrate' in navigator){
+    navigator.vibrate(12);
+  }
+  burstHearts(cardParent);
 }
 
 /* ---------- Heart burst on tap ---------- */
